@@ -52,6 +52,20 @@ describe('useFullScreenHandle', () => {
       expect(hook.result.current.active).toBe(false);
     });
 
+    describe('enabled flag', () => {
+      it('is true when fscreen.fullscreenEnabled is true', () => {
+        fscreen.fullscreenEnabled = true;
+        const { result } = renderHook(() => useFullScreenHandle());
+        expect(result.current.enabled).toBe(true);
+      });
+
+      it('is false when fscreen.fullscreenEnabled is false', () => {
+        fscreen.fullscreenEnabled = false;
+        const { result } = renderHook(() => useFullScreenHandle());
+        expect(result.current.enabled).toBe(false);
+      });
+    });
+
     it('listens to fullscreen change', () => {
       expect(fscreen.addEventListener).toHaveBeenCalledTimes(1);
       expect(fscreen.addEventListener).toHaveBeenCalledWith(

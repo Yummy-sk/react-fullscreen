@@ -9,6 +9,7 @@ import fscreen from 'fscreen';
 
 export interface FullScreenHandle {
   active: boolean;
+  enabled: boolean;
   enter: () => Promise<void>;
   exit: () => Promise<void>;
   node: React.MutableRefObject<HTMLDivElement | null>;
@@ -24,6 +25,7 @@ export interface FullScreenProps {
 export function useFullScreenHandle(): FullScreenHandle {
   const [active, setActive] = useState<boolean>(false);
   const node = useRef<HTMLDivElement | null>(null);
+  const enabled = useMemo(() => fscreen.fullscreenEnabled, []);
 
   useEffect(() => {
     const handleChange = () => {
@@ -53,6 +55,7 @@ export function useFullScreenHandle(): FullScreenHandle {
   return useMemo(
     () => ({
       active,
+      enabled,
       enter,
       exit,
       node,
