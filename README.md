@@ -28,9 +28,11 @@ function App() {
 
   return (
     <div>
-      <button onClick={handle.enter}>
-        Enter fullscreen
-      </button>
+      {handle.enabled &&
+        <button onClick={handle.enter}>
+          Enter fullscreen
+        </button>
+      }
 
       <FullScreen handle={handle}>
         Any fullscreen content here
@@ -41,6 +43,8 @@ function App() {
 
 export default App;
 ```
+
+`handle.enabled` indicates whether the browser supports fullscreen. Use it to conditionally render fullscreen controls.
 
 When you have many elements you need one handle per element.
 ```jsx
@@ -106,6 +110,10 @@ export default App;
 interface FullScreenHandle {
   active: boolean;
   // Specifies if attached element is currently full screen.
+
+  enabled: boolean;
+  // Specifies if the browser supports full screen.
+  // Use this to show/hide full screen button.
 
   enter: () => Promise<void>;
   // Requests this element to go full screen.
